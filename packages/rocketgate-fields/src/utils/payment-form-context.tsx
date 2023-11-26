@@ -49,6 +49,7 @@ function PaymentFormProvider({
     expiryMonth: "",
     expiryYear: "",
     cvv: "",
+    terms: false,
   });
 
   const localization: PaymentFormContextProps["localization"] = {

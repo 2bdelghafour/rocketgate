@@ -6,4 +6,5 @@ export { CardNumber } from "./fields/card-number";
 export { ExpiryMonth } from "./fields/expiry-month";
 export { ExpiryYear } from "./fields/expiry-year";
 export { Cvv } from "./fields/cvv";
+export { Terms } from "./fields/terms";
 export { SubmitButton } from "./fields/submit-button";

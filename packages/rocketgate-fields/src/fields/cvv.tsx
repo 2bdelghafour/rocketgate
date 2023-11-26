@@ -45,9 +45,7 @@ export function Cvv({ classNames, ...props }: CvvProps): JSX.Element {
         })}
         className={classNames?.input}
         id={CVV_FIELD}
-        maxLength={19}
         name={CVV_FIELD}
-        onBlur={handleChange}
         onChange={handleChange}
         type="text"
         value={formData.cvv}

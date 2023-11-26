@@ -29,6 +29,9 @@ export const paymentFormSchema = z
     cvv: z.string().refine((value) => cvvRegEx.test(value), {
       message: "Missing or invalid CVV",
     }),
+    terms: z.boolean().refine((value) => value, {
+      message: "You must agree to the terms",
+    }),
   })
   .refine(
     ({ expiryMonth, expiryYear }) => {
