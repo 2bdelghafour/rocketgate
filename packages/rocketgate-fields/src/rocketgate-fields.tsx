@@ -1,15 +1,14 @@
 "use client";
 
-import type { FormEvent, ReactNode, RefObject } from "react";
+import type { ReactNode, RefObject } from "react";
 import { useRef, useEffect, useImperativeHandle, useState } from "react";
+import { CSRF_TOKEN_FIELD, PAYMENT_METHOD_FIELD } from "./config/config";
+import type { PaymentFormContextProps } from "./utils/payment-form-context";
 import {
-  CARD_NUMBER_FIELD,
-  CSRF_TOKEN_FIELD,
-  CVV_FIELD,
-  EXPIRY_MONTH_FIELD,
-  EXPIRY_YEAR_FIELD,
-  PAYMENT_METHOD_FIELD,
-} from "./config/config";
+  PaymentFormProvider,
+  usePaymentFormContext,
+} from "./utils/payment-form-context";
+import type { DeepPartial } from "./utils";
 
 declare global {
   interface Window {
@@ -25,13 +24,18 @@ export interface RocketGateFieldsProps {
   onFormReady?: () => void;
 }
 
-export function RocketGateFields({
+interface RocketGateFieldsWithContextProps extends RocketGateFieldsProps {
+  localization?: DeepPartial<PaymentFormContextProps["localization"]>;
+}
+
+function RocketGateFields({
   src,
   children,
   formRef,
   className,
   onFormReady,
 }: RocketGateFieldsProps): JSX.Element {
+  const { handleSubmit } = usePaymentFormContext();
   const innerFormRef = useRef<HTMLFormElement>(null);
   const cardFieldsRef = useRef<HTMLDivElement>(null);
   const [csrfToken, setCsrfToken] = useState("");
@@ -98,18 +102,6 @@ export function RocketGateFields({
     };
   }, [onFormReady]);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const cardNumber = formData.get(CARD_NUMBER_FIELD);
-    const expiryMonth = formData.get(EXPIRY_MONTH_FIELD);
-    const expiryYear = formData.get(EXPIRY_YEAR_FIELD);
-    const cvv = formData.get(CVV_FIELD);
-
-    console.log({ cardNumber, expiryMonth, expiryYear, cvv });
-  };
-
   return (
     <>
       {!csrfToken && (
@@ -124,7 +116,7 @@ export function RocketGateFields({
         className={className}
         id="rg-payment-form"
         noValidate
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         ref={innerFormRef}
       >
         <input id={PAYMENT_METHOD_FIELD} type="hidden" value="card" />
@@ -139,3 +131,14 @@ export function RocketGateFields({
 }
 
 RocketGateFields.displayName = "RocketGateFields";
+
+export default function RocketGateFieldsWithContext({
+  localization,
+  ...props
+}: RocketGateFieldsWithContextProps): JSX.Element {
+  return (
+    <PaymentFormProvider localization={localization}>
+      <RocketGateFields {...props} />
+    </PaymentFormProvider>
+  );
+}
