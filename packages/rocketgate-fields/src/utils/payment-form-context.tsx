@@ -63,14 +63,10 @@ function PaymentFormProvider({
       e.preventDefault();
 
       paymentFormSchema.parse(formData);
-
-      console.log("Form submitted:", formData);
+      window.RocketGateSubmitFields(e);
       setFormErrors(null);
     } catch (error) {
-      if (error instanceof ZodError) {
-        console.log({ error: error.flatten() });
-        setFormErrors(error.flatten());
-      }
+      if (error instanceof ZodError) setFormErrors(error.flatten());
     }
   };
 

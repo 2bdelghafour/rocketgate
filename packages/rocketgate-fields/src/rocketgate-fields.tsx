@@ -12,7 +12,10 @@ import type { DeepPartial } from "./utils";
 
 declare global {
   interface Window {
+    rocketGateForm: HTMLFormElement | null;
+    RocketGateSetSubmitCB: (callback: (form: HTMLFormElement) => void) => void;
     RocketGateLoadFields: (fieldsWrapperID: string) => void;
+    RocketGateSubmitFields: (e: React.FormEvent<HTMLFormElement>) => void;
   }
 }
 
@@ -22,6 +25,21 @@ export interface RocketGateFieldsProps {
   formRef?: RefObject<Pick<HTMLFormElement, "submit">>;
   className?: string;
   onFormReady?: () => void;
+  onCardSubmitted: ({
+    token,
+    cardNumber,
+    expiryMonth,
+    expiryYear,
+    cvv,
+    bin,
+  }: {
+    token: string;
+    cardNumber: string;
+    expiryMonth: string;
+    expiryYear: string;
+    cvv: string;
+    bin: string;
+  }) => void;
 }
 
 interface RocketGateFieldsWithContextProps extends RocketGateFieldsProps {
@@ -34,11 +52,13 @@ function RocketGateFields({
   formRef,
   className,
   onFormReady,
+  onCardSubmitted,
 }: RocketGateFieldsProps): JSX.Element {
-  const { handleSubmit } = usePaymentFormContext();
+  const { handleSubmit, formData } = usePaymentFormContext();
   const innerFormRef = useRef<HTMLFormElement>(null);
   const cardFieldsRef = useRef<HTMLDivElement>(null);
-  const [csrfToken, setCsrfToken] = useState("");
+  const [csrfToken, setCsrfToken] = useState<string | null>(null);
+  const [paymentToken, setPaymentToken] = useState<string | null>(null);
 
   useImperativeHandle(
     formRef,
@@ -66,6 +86,16 @@ function RocketGateFields({
     script.async = true;
     script.onload = () => {
       try {
+        window.rocketGateForm = innerFormRef.current;
+        window.RocketGateSetSubmitCB((form: HTMLFormElement): void => {
+          const tokenFormData = new FormData(form);
+          const token = tokenFormData
+            .get("RocketGateToken")
+            ?.toString()
+            ?.replace("\n", "");
+
+          if (token) setPaymentToken(token);
+        });
         window.RocketGateLoadFields("rg-card-fields");
       } catch {
         console.error("RocketGate script failed to load");
@@ -102,6 +132,15 @@ function RocketGateFields({
     };
   }, [onFormReady]);
 
+  useEffect(() => {
+    if (paymentToken) {
+      const bin = formData.cardNumber.substring(0, 6);
+
+      onCardSubmitted({ token: paymentToken, ...formData, bin });
+      setPaymentToken(null);
+    }
+  }, [paymentToken, onCardSubmitted, formData]);
+
   return (
     <>
       {!csrfToken && (
@@ -120,9 +159,9 @@ function RocketGateFields({
         ref={innerFormRef}
       >
         <input id={PAYMENT_METHOD_FIELD} type="hidden" value="card" />
-        {csrfToken.length > 0 && (
+        {csrfToken ? (
           <input id={CSRF_TOKEN_FIELD} type="hidden" value={csrfToken} />
-        )}
+        ) : null}
 
         {children}
       </form>
