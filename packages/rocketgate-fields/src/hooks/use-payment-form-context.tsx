@@ -1,8 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import type { z } from "zod";
 import { ZodError } from "zod";
-import { paymentFormSchema } from "./schema";
-import type { DeepPartial } from ".";
+import { paymentFormSchema } from "../utils/schema";
+import type { DeepPartial } from "../utils";
 
 type FormData = z.infer<typeof paymentFormSchema>;
 

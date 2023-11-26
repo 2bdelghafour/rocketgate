@@ -2,7 +2,7 @@
 
 import { EXPIRY_YEAR_FIELD } from "../config/config";
 import { padNumberWithZero } from "../utils";
-import { usePaymentFormContext } from "../utils/payment-form-context";
+import { usePaymentFormContext } from "../hooks/use-payment-form-context";
 
 interface ExpiryYearProps extends React.HTMLAttributes<HTMLDivElement> {
   classNames?: {

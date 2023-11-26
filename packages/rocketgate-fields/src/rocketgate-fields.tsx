@@ -3,11 +3,11 @@
 import type { ReactNode, RefObject } from "react";
 import { useRef, useEffect, useImperativeHandle, useState } from "react";
 import { CSRF_TOKEN_FIELD, PAYMENT_METHOD_FIELD } from "./config/config";
-import type { PaymentFormContextProps } from "./utils/payment-form-context";
+import type { PaymentFormContextProps } from "./hooks/use-payment-form-context";
 import {
   PaymentFormProvider,
   usePaymentFormContext,
-} from "./utils/payment-form-context";
+} from "./hooks/use-payment-form-context";
 import type { DeepPartial } from "./utils";
 
 declare global {

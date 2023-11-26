@@ -1,7 +1,7 @@
 "use client";
 
 import { CARD_NUMBER_FIELD } from "../config/config";
-import { usePaymentFormContext } from "../utils/payment-form-context";
+import { usePaymentFormContext } from "../hooks/use-payment-form-context";
 
 interface CardNumberProps extends React.HTMLAttributes<HTMLDivElement> {
   classNames?: {

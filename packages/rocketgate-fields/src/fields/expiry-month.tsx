@@ -2,7 +2,7 @@
 
 import { padNumberWithZero } from "../utils";
 import { EXPIRY_MONTH_FIELD } from "../config/config";
-import { usePaymentFormContext } from "../utils/payment-form-context";
+import { usePaymentFormContext } from "../hooks/use-payment-form-context";
 
 interface ExpiryMonthProps extends React.HTMLAttributes<HTMLDivElement> {
   classNames?: {

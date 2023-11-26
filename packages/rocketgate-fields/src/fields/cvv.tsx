@@ -1,7 +1,7 @@
 "use client";
 
 import { CVV_FIELD } from "../config/config";
-import { usePaymentFormContext } from "../utils/payment-form-context";
+import { usePaymentFormContext } from "../hooks/use-payment-form-context";
 
 interface CvvProps extends React.HTMLAttributes<HTMLDivElement> {
   classNames?: {
