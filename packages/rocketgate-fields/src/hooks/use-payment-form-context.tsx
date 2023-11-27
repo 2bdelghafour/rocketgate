@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, useContext, useState } from "react";
 import type { z } from "zod";
 import { ZodError } from "zod";
@@ -6,7 +8,7 @@ import type { DeepPartial } from "../utils";
 
 type FormData = z.infer<typeof paymentFormSchema>;
 
-type Errors = z.inferFlattenedErrors<typeof paymentFormSchema>;
+export type Errors = z.inferFlattenedErrors<typeof paymentFormSchema>;
 
 export interface PaymentFormContextProps {
   formData: FormData;
@@ -36,12 +38,14 @@ const PaymentFormContext = createContext<PaymentFormContextProps | undefined>(
   undefined
 );
 
-function PaymentFormProvider({
+export function PaymentFormProvider({
   children,
   localization: sourceLocalization,
+  onFormError,
 }: {
   children: React.ReactNode;
   localization?: DeepPartial<PaymentFormContextProps["localization"]>;
+  onFormError?: (errors: Errors) => void;
 }): JSX.Element {
   const [formErrors, setFormErrors] = useState<Errors | null>(null);
   const [formData, setFormData] = useState<FormData>({
@@ -67,7 +71,12 @@ function PaymentFormProvider({
       window.RocketGateSubmitFields(e);
       setFormErrors(null);
     } catch (error) {
-      if (error instanceof ZodError) setFormErrors(error.flatten());
+      if (error instanceof ZodError) {
+        const flatError = error.flatten();
+
+        setFormErrors(flatError);
+        onFormError?.(flatError);
+      }
     }
   };
 
@@ -86,7 +95,7 @@ function PaymentFormProvider({
   );
 }
 
-const usePaymentFormContext = (): PaymentFormContextProps => {
+export const usePaymentFormContext = (): PaymentFormContextProps => {
   const context = useContext(PaymentFormContext);
 
   if (!context) {
@@ -97,5 +106,3 @@ const usePaymentFormContext = (): PaymentFormContextProps => {
 
   return context;
 };
-
-export { PaymentFormProvider, usePaymentFormContext };

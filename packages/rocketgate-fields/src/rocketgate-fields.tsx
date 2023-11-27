@@ -1,14 +1,18 @@
 "use client";
 
-import type { ReactNode, RefObject } from "react";
 import { useRef, useEffect, useImperativeHandle, useState } from "react";
 import { CSRF_TOKEN_FIELD, PAYMENT_METHOD_FIELD } from "./config/config";
-import type { PaymentFormContextProps } from "./hooks/use-payment-form-context";
+import type {
+  Errors,
+  PaymentFormContextProps,
+} from "./hooks/use-payment-form-context";
 import {
   PaymentFormProvider,
   usePaymentFormContext,
 } from "./hooks/use-payment-form-context";
 import type { DeepPartial } from "./utils";
+import { DeviceFingerprintingForm } from "./forms/device-fingerprinting-form";
+import { StepUpForm } from "./forms/step-up-form";
 
 declare global {
   interface Window {
@@ -19,10 +23,18 @@ declare global {
   }
 }
 
+export interface RocketGateCardFields {
+  token: string;
+  cardNumber: string;
+  expiryMonth: string;
+  expiryYear: string;
+  cvv: string;
+  bin: string;
+}
 export interface RocketGateFieldsProps {
   src: string;
-  children: ReactNode;
-  formRef?: RefObject<Pick<HTMLFormElement, "submit">>;
+  children: React.ReactNode;
+  formRef?: React.RefObject<Pick<HTMLFormElement, "submit">>;
   className?: string;
   onFormReady?: () => void;
   onCardSubmitted: ({
@@ -32,18 +44,12 @@ export interface RocketGateFieldsProps {
     expiryYear,
     cvv,
     bin,
-  }: {
-    token: string;
-    cardNumber: string;
-    expiryMonth: string;
-    expiryYear: string;
-    cvv: string;
-    bin: string;
-  }) => void;
+  }: RocketGateCardFields) => void;
 }
 
 interface RocketGateFieldsWithContextProps extends RocketGateFieldsProps {
   localization?: DeepPartial<PaymentFormContextProps["localization"]>;
+  onFormError?: (errors: Errors) => void;
 }
 
 function RocketGateFields({
@@ -165,6 +171,9 @@ function RocketGateFields({
 
         {children}
       </form>
+
+      <DeviceFingerprintingForm />
+      <StepUpForm />
     </>
   );
 }
@@ -173,10 +182,11 @@ RocketGateFields.displayName = "RocketGateFields";
 
 export default function RocketGateFieldsWithContext({
   localization,
+  onFormError,
   ...props
 }: RocketGateFieldsWithContextProps): JSX.Element {
   return (
-    <PaymentFormProvider localization={localization}>
+    <PaymentFormProvider localization={localization} onFormError={onFormError}>
       <RocketGateFields {...props} />
     </PaymentFormProvider>
   );
