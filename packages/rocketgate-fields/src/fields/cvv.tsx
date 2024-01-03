@@ -4,6 +4,7 @@ import { CVV_FIELD } from "../config/config";
 import { usePaymentFormContext } from "../hooks/use-payment-form-context";
 
 interface CvvProps extends React.HTMLAttributes<HTMLDivElement> {
+  placeholder?: string;
   classNames?: {
     label?: string;
     input?: string;
@@ -11,7 +12,11 @@ interface CvvProps extends React.HTMLAttributes<HTMLDivElement> {
   };
 }
 
-export function Cvv({ classNames, ...props }: CvvProps): JSX.Element {
+export function Cvv({
+  classNames,
+  placeholder,
+  ...props
+}: CvvProps): JSX.Element {
   const { formData, setFormData, formErrors, localization } =
     usePaymentFormContext();
   const cvvErrors = formErrors?.fieldErrors.cvv;
@@ -47,6 +52,7 @@ export function Cvv({ classNames, ...props }: CvvProps): JSX.Element {
         id={CVV_FIELD}
         name={CVV_FIELD}
         onChange={handleChange}
+        placeholder={placeholder}
         type="text"
         value={formData.cvv}
       />

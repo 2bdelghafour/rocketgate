@@ -5,6 +5,7 @@ import { padNumberWithZero } from "../utils";
 import { usePaymentFormContext } from "../hooks/use-payment-form-context";
 
 interface ExpiryYearProps extends React.HTMLAttributes<HTMLDivElement> {
+  placeholder?: string;
   classNames?: {
     label?: string;
     input?: string;
@@ -14,6 +15,7 @@ interface ExpiryYearProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function ExpiryYear({
   classNames,
+  placeholder,
   ...props
 }: ExpiryYearProps): JSX.Element {
   const { formData, setFormData, formErrors, localization } =
@@ -59,7 +61,7 @@ export function ExpiryYear({
         value={formData.expiryYear}
       >
         <option disabled value="">
-          YYYY
+          {placeholder || `YYYY`}
         </option>
         {futureYears.map((year) => {
           const paddedYear = padNumberWithZero(year % 100, 2);

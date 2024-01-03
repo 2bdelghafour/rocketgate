@@ -4,6 +4,7 @@ import { CARD_NUMBER_FIELD } from "../config/config";
 import { usePaymentFormContext } from "../hooks/use-payment-form-context";
 
 interface CardNumberProps extends React.HTMLAttributes<HTMLDivElement> {
+  placeholder?: string;
   classNames?: {
     label?: string;
     input?: string;
@@ -13,6 +14,7 @@ interface CardNumberProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function CardNumber({
   classNames,
+  placeholder,
   ...props
 }: CardNumberProps): JSX.Element {
   const { formData, setFormData, formErrors, localization } =
@@ -50,6 +52,7 @@ export function CardNumber({
         id={CARD_NUMBER_FIELD}
         name={CARD_NUMBER_FIELD}
         onChange={handleChange}
+        placeholder={placeholder}
         type="text"
         value={formData.cardNumber}
       />

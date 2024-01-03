@@ -5,6 +5,7 @@ import { EXPIRY_MONTH_FIELD } from "../config/config";
 import { usePaymentFormContext } from "../hooks/use-payment-form-context";
 
 interface ExpiryMonthProps extends React.HTMLAttributes<HTMLDivElement> {
+  placeholder?: string;
   classNames?: {
     label?: string;
     input?: string;
@@ -14,6 +15,7 @@ interface ExpiryMonthProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function ExpiryMonth({
   classNames,
+  placeholder,
   ...props
 }: ExpiryMonthProps): JSX.Element {
   const { formData, setFormData, formErrors, localization } =
@@ -55,7 +57,7 @@ export function ExpiryMonth({
         value={formData.expiryMonth}
       >
         <option disabled value="">
-          MM
+          {placeholder || `MM`}
         </option>
         {monthOptions.map((monthNumber) => {
           const paddedMonth = padNumberWithZero(monthNumber, 2);
