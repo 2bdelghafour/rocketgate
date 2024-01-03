@@ -88,8 +88,6 @@ interface PaymentFlowContextProps {
 }
 
 const reducer = (state: PaymentState, action: PaymentAction): PaymentState => {
-  console.log({ action });
-
   switch (action.type) {
     case "METADATA":
       return {

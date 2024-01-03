@@ -3,7 +3,7 @@ module.exports = {
   overrides: [
     {
       files: ["*.tsx"],
-      rules: { "no-console": "off" },
+      rules: { "no-console": ["error", { allow: ["warn", "error"] }] },
     },
   ],
 };
