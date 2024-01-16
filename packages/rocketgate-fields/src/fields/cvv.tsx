@@ -48,11 +48,16 @@ export function Cvv({
           "data-error": true,
           "aria-invalid": true,
         })}
+        aria-label={localization.label.cvv}
+        autoComplete="cc-csc"
+        autoCorrect="off"
         className={classNames?.input}
         id={CVV_FIELD}
+        inputMode="numeric"
         name={CVV_FIELD}
         onChange={handleChange}
         placeholder={placeholder}
+        spellCheck="false"
         type="text"
         value={formData.cvv}
       />

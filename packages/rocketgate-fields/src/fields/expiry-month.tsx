@@ -50,6 +50,8 @@ export function ExpiryMonth({
           "data-error": true,
           "aria-invalid": true,
         })}
+        aria-label={localization.label.expiryMonth}
+        autoComplete="cc-exp-month"
         className={classNames?.input}
         id={EXPIRY_MONTH_FIELD}
         name={EXPIRY_MONTH_FIELD}

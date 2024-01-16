@@ -54,6 +54,8 @@ export function ExpiryYear({
           "data-error": true,
           "aria-invalid": true,
         })}
+        aria-label={localization.label.expiryYear}
+        autoComplete="cc-exp-year"
         className={classNames?.input}
         id={EXPIRY_YEAR_FIELD}
         name={EXPIRY_YEAR_FIELD}

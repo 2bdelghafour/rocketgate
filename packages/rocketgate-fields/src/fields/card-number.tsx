@@ -48,11 +48,16 @@ export function CardNumber({
           "data-error": true,
           "aria-invalid": true,
         })}
+        aria-label={localization.label.cardNumber}
+        autoComplete="cc-number"
+        autoCorrect="off"
         className={classNames?.input}
         id={CARD_NUMBER_FIELD}
+        inputMode="numeric"
         name={CARD_NUMBER_FIELD}
         onChange={handleChange}
         placeholder={placeholder}
+        spellCheck="false"
         type="text"
         value={formData.cardNumber}
       />
