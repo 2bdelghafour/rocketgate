@@ -1,7 +1,11 @@
 "use client";
 
 import { useRef, useEffect, useImperativeHandle, useState } from "react";
-import { CSRF_TOKEN_FIELD, PAYMENT_METHOD_FIELD } from "./config/config";
+import {
+  CSRF_TOKEN_FIELD,
+  IOVATION_FIELD,
+  PAYMENT_METHOD_FIELD,
+} from "./config/config";
 import type {
   Errors,
   PaymentFormContextProps,
@@ -20,6 +24,11 @@ declare global {
     RocketGateSetSubmitCB: (callback: (form: HTMLFormElement) => void) => void;
     RocketGateLoadFields: (fieldsWrapperID: string) => void;
     RocketGateSubmitFields: (e: React.FormEvent<HTMLFormElement>) => void;
+    io_bbout_element_id: string;
+    io_enable_rip: boolean;
+    io_install_stm: boolean;
+    io_exclude_stm: number;
+    io_install_flash: boolean;
   }
 }
 
@@ -30,12 +39,14 @@ export interface RocketGateCardFields {
   expiryYear: string;
   cvv: string;
   bin: string;
+  ioBlackBox?: string;
 }
 export interface RocketGateFieldsProps {
   src: string;
   children: React.ReactNode;
   formRef?: React.RefObject<Pick<HTMLFormElement, "submit">>;
   className?: string;
+  scrub?: boolean;
   onFormReady?: () => void;
   onCardSubmitted: ({
     token,
@@ -57,6 +68,7 @@ function RocketGateFields({
   children,
   formRef,
   className,
+  scrub = false,
   onFormReady,
   onCardSubmitted,
 }: RocketGateFieldsProps): JSX.Element {
@@ -86,6 +98,7 @@ function RocketGateFields({
   );
 
   useEffect(() => {
+    const iovationScript = document.createElement("script");
     const script = document.createElement("script");
     script.id = "rg-script";
     script.src = src;
@@ -98,7 +111,7 @@ function RocketGateFields({
           const token = tokenFormData
             .get("RocketGateToken")
             ?.toString()
-            ?.replace("\n", "");
+            .replace("\n", "");
 
           if (token) setPaymentToken(token);
         });
@@ -107,13 +120,24 @@ function RocketGateFields({
         console.error("RocketGate script failed to load");
       }
     };
-
     document.body.appendChild(script);
+
+    if (scrub) {
+      window.io_bbout_element_id = "ioBlackBox";
+      window.io_enable_rip = true;
+      window.io_install_stm = false;
+      window.io_exclude_stm = 12;
+      window.io_install_flash = false;
+      iovationScript.id = "rg-iovation-script";
+      iovationScript.src = "https://mpsnare.iesnare.com/snare.js";
+      document.body.appendChild(iovationScript);
+    }
 
     return () => {
       document.body.removeChild(script);
+      if (scrub) document.body.removeChild(iovationScript);
     };
-  }, [src]);
+  }, [src, scrub]);
 
   useEffect(() => {
     const cardFieldsElement = cardFieldsRef.current;
@@ -168,6 +192,7 @@ function RocketGateFields({
         {csrfToken ? (
           <input id={CSRF_TOKEN_FIELD} type="hidden" value={csrfToken} />
         ) : null}
+        {scrub ? <input id={IOVATION_FIELD} type="hidden" /> : null}
 
         {children}
       </form>

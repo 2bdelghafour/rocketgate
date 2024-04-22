@@ -1,6 +1,6 @@
 {
   "name": "rocketgate-fields",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -16,16 +16,16 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
-    "zod": "^3.22.4"
+    "zod": "^3.23.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "eslint-config-custom": "workspace:*",
     "react": "^18.2.0",
     "tsconfig": "workspace:*",
     "tsup": "^6.7.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   },
   "publishConfig": {
     "access": "public"
