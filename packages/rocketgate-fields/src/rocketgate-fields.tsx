@@ -48,14 +48,7 @@ export interface RocketGateFieldsProps {
   className?: string;
   scrub?: boolean;
   onFormReady?: () => void;
-  onCardSubmitted: ({
-    token,
-    cardNumber,
-    expiryMonth,
-    expiryYear,
-    cvv,
-    bin,
-  }: RocketGateCardFields) => void;
+  onCardSubmitted: (fields: RocketGateCardFields) => void;
 }
 
 interface RocketGateFieldsWithContextProps extends RocketGateFieldsProps {
@@ -75,6 +68,7 @@ function RocketGateFields({
   const { handleSubmit, formData } = usePaymentFormContext();
   const innerFormRef = useRef<HTMLFormElement>(null);
   const cardFieldsRef = useRef<HTMLDivElement>(null);
+  const ioBlackBoxRef = useRef<HTMLInputElement>(null);
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const [paymentToken, setPaymentToken] = useState<string | null>(null);
 
@@ -123,7 +117,7 @@ function RocketGateFields({
     document.body.appendChild(script);
 
     if (scrub) {
-      window.io_bbout_element_id = "ioBlackBox";
+      window.io_bbout_element_id = IOVATION_FIELD;
       window.io_enable_rip = true;
       window.io_install_stm = false;
       window.io_exclude_stm = 12;
@@ -166,7 +160,12 @@ function RocketGateFields({
     if (paymentToken) {
       const bin = formData.cardNumber.substring(0, 6);
 
-      onCardSubmitted({ token: paymentToken, ...formData, bin });
+      onCardSubmitted({
+        token: paymentToken,
+        ...formData,
+        bin,
+        ioBlackBox: ioBlackBoxRef.current?.value,
+      });
       setPaymentToken(null);
     }
   }, [paymentToken, onCardSubmitted, formData]);
@@ -192,7 +191,9 @@ function RocketGateFields({
         {csrfToken ? (
           <input id={CSRF_TOKEN_FIELD} type="hidden" value={csrfToken} />
         ) : null}
-        {scrub ? <input id={IOVATION_FIELD} type="hidden" /> : null}
+        {scrub ? (
+          <input id={IOVATION_FIELD} ref={ioBlackBoxRef} type="hidden" />
+        ) : null}
 
         {children}
       </form>

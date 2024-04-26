@@ -32,7 +32,6 @@ export const paymentFormSchema = z
     terms: z.boolean().refine((value) => value, {
       message: "You must agree to the terms",
     }),
-    ioBlackBox: z.string().optional(),
   })
   .refine(
     ({ expiryMonth, expiryYear }) => {

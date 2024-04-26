@@ -1,5 +1,11 @@
 # rocketgate-fields
 
+## 0.5.0
+
+### Minor Changes
+
+- Pass Iovation device fingerprint
+
 ## 0.4.0
 
 ### Minor Changes
