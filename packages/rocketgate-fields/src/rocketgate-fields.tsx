@@ -8,6 +8,7 @@ import {
 } from "./config/config";
 import type {
   Errors,
+  Locale,
   PaymentFormContextProps,
 } from "./hooks/use-payment-form-context";
 import {
@@ -53,6 +54,7 @@ export interface RocketGateFieldsProps {
 
 interface RocketGateFieldsWithContextProps extends RocketGateFieldsProps {
   localization?: DeepPartial<PaymentFormContextProps["localization"]>;
+  locale?: Locale;
   onFormError?: (errors: Errors) => void;
 }
 
@@ -208,11 +210,16 @@ RocketGateFields.displayName = "RocketGateFields";
 
 export default function RocketGateFieldsWithContext({
   localization,
+  locale,
   onFormError,
   ...props
 }: RocketGateFieldsWithContextProps): JSX.Element {
   return (
-    <PaymentFormProvider localization={localization} onFormError={onFormError}>
+    <PaymentFormProvider
+      locale={locale}
+      localization={localization}
+      onFormError={onFormError}
+    >
       <RocketGateFields {...props} />
     </PaymentFormProvider>
   );

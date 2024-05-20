@@ -17,7 +17,7 @@ export function CardNumber({
   placeholder,
   ...props
 }: CardNumberProps): JSX.Element {
-  const { formData, setFormData, formErrors, localization } =
+  const { formData, setFormData, formErrors, localization, locale } =
     usePaymentFormContext();
   const cardNumberErrors = formErrors?.fieldErrors.cardNumber;
   const hasError = cardNumberErrors && cardNumberErrors.length > 0;
@@ -40,7 +40,7 @@ export function CardNumber({
       {...(hasError && { "data-error": true })}
     >
       <label className={classNames?.label} htmlFor={CARD_NUMBER_FIELD}>
-        {localization.label.cardNumber}
+        {localization.label[locale].cardNumber}
       </label>
       <input
         {...(hasError && {
@@ -48,7 +48,7 @@ export function CardNumber({
           "data-error": true,
           "aria-invalid": true,
         })}
-        aria-label={localization.label.cardNumber}
+        aria-label={localization.label[locale].cardNumber}
         autoComplete="cc-number"
         autoCorrect="off"
         className={classNames?.input}

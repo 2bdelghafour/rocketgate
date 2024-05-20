@@ -8,45 +8,47 @@ const expiryYearRegEx = /^\d{2}$/;
 // matches a string that consists of exactly 3 or 4 digits.
 const cvvRegEx = /^\d{3,4}$/;
 
-export const paymentFormSchema = z
-  .object({
-    cardNumber: z.string().refine((value) => isValidCreditCardNumber(value), {
-      message: "Missing or invalid card number",
-    }),
-    expiryMonth: z.string().refine((value) => expoiryMonthRegEx.test(value), {
-      message: "Missing or invalid expiry month",
-    }),
-    expiryYear: z
-      .string()
-      .refine(
-        (value) =>
-          expiryYearRegEx.test(value) &&
-          parseInt(value) >= new Date().getFullYear() % 100,
-        {
-          message: "Missing or invalid expiry year",
-        }
-      ),
-    cvv: z.string().refine((value) => cvvRegEx.test(value), {
-      message: "Missing or invalid CVV",
-    }),
-    terms: z.boolean().refine((value) => value, {
-      message: "You must agree to the terms",
-    }),
-  })
-  .refine(
-    ({ expiryMonth, expiryYear }) => {
-      const currentYear = new Date().getFullYear() % 100;
-      const currentMonth = new Date().getMonth() + 1;
-      const selectedYear = parseInt(expiryYear);
-      const selectedMonth = parseInt(expiryMonth);
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- It is best leaving type inferation type to Zod
+export const paymentFormSchema = (localization?: Record<string, string>) =>
+  z
+    .object({
+      cardNumber: z.string().refine((value) => isValidCreditCardNumber(value), {
+        message: localization?.cardNumber,
+      }),
+      expiryMonth: z.string().refine((value) => expoiryMonthRegEx.test(value), {
+        message: localization?.expiryMonth,
+      }),
+      expiryYear: z
+        .string()
+        .refine(
+          (value) =>
+            expiryYearRegEx.test(value) &&
+            parseInt(value) >= new Date().getFullYear() % 100,
+          {
+            message: localization?.expiryYear,
+          }
+        ),
+      cvv: z.string().refine((value) => cvvRegEx.test(value), {
+        message: localization?.cvv,
+      }),
+      terms: z.boolean().refine((value) => value, {
+        message: localization?.terms,
+      }),
+    })
+    .refine(
+      ({ expiryMonth, expiryYear }) => {
+        const currentYear = new Date().getFullYear() % 100;
+        const currentMonth = new Date().getMonth() + 1;
+        const selectedYear = parseInt(expiryYear);
+        const selectedMonth = parseInt(expiryMonth);
 
-      return (
-        selectedYear > currentYear ||
-        (selectedYear === currentYear && selectedMonth >= currentMonth)
-      );
-    },
-    {
-      message: "Expiry must be in the future",
-      path: ["expiryMonth"],
-    }
-  );
+        return (
+          selectedYear > currentYear ||
+          (selectedYear === currentYear && selectedMonth >= currentMonth)
+        );
+      },
+      {
+        message: localization?.expiry,
+        path: ["expiryMonth"],
+      }
+    );

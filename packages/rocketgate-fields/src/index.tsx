@@ -14,3 +14,4 @@ export { Cvv } from "./fields/cvv";
 export { Terms } from "./fields/terms";
 export { SubmitButton } from "./fields/submit-button";
 export { determineError, REASON_CODES } from "./utils/determine-error";
+export type { Locale } from "./hooks/use-payment-form-context";

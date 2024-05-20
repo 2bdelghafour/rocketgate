@@ -1,3 +1,6 @@
+import { LOCALES } from "../config/config";
+import type { Locale } from "../hooks/use-payment-form-context";
+
 export function padNumberWithZero(number: number, length: number): string {
   return number.toString().padStart(length, "0");
 }
@@ -25,4 +28,20 @@ export const isValidCreditCardNumber = (creditCardNumber: string): boolean => {
 
 export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
+export const mergeLocalizations = <
+  Localization extends Record<Locale, Record<string, string>>,
+>(
+  base: Localization,
+  source?: DeepPartial<Localization>
+): Localization => {
+  return LOCALES.reduce((acc, lang) => {
+    acc[lang] = {
+      ...base[lang],
+      ...source?.[lang],
+    };
+
+    return acc;
+  }, base);
 };

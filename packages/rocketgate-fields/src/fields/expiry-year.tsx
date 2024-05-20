@@ -18,7 +18,7 @@ export function ExpiryYear({
   placeholder,
   ...props
 }: ExpiryYearProps): JSX.Element {
-  const { formData, setFormData, formErrors, localization } =
+  const { formData, setFormData, formErrors, localization, locale } =
     usePaymentFormContext();
   const expiryYearErrors = formErrors?.fieldErrors.expiryYear;
   const hasError = expiryYearErrors && expiryYearErrors.length > 0;
@@ -46,7 +46,7 @@ export function ExpiryYear({
       {...(hasError && { "data-error": true })}
     >
       <label className={classNames?.label} htmlFor={EXPIRY_YEAR_FIELD}>
-        {localization.label.expiryYear}
+        {localization.label[locale].expiryYear}
       </label>
       <select
         {...(hasError && {
@@ -54,7 +54,7 @@ export function ExpiryYear({
           "data-error": true,
           "aria-invalid": true,
         })}
-        aria-label={localization.label.expiryYear}
+        aria-label={localization.label[locale].expiryYear}
         autoComplete="cc-exp-year"
         className={classNames?.input}
         id={EXPIRY_YEAR_FIELD}

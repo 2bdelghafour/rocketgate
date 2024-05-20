@@ -1,5 +1,11 @@
 # rocketgate-fields
 
+## 0.6.0
+
+### Minor Changes
+
+- Add localization support
+
 ## 0.5.0
 
 ### Minor Changes

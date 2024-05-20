@@ -6,3 +6,13 @@ export const EXPIRY_YEAR_FIELD = "rg_Expire_year";
 export const CVV_FIELD = "rg_Cvv2";
 export const TERMS_FIELD = "rg_Terms";
 export const IOVATION_FIELD = "ioBlackBox";
+export const LOCALES = [
+  "EN",
+  "PT",
+  "ES",
+  "IT",
+  "NL",
+  "DE",
+  "FR",
+  "PL",
+] as const;

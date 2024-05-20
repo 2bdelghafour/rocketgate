@@ -17,7 +17,7 @@ export function Cvv({
   placeholder,
   ...props
 }: CvvProps): JSX.Element {
-  const { formData, setFormData, formErrors, localization } =
+  const { formData, setFormData, formErrors, localization, locale } =
     usePaymentFormContext();
   const cvvErrors = formErrors?.fieldErrors.cvv;
   const hasError = cvvErrors && cvvErrors.length > 0;
@@ -40,7 +40,7 @@ export function Cvv({
       {...(hasError && { "data-error": true })}
     >
       <label className={classNames?.label} htmlFor={CVV_FIELD}>
-        {localization.label.cvv}
+        {localization.label[locale].cvv}
       </label>
       <input
         {...(hasError && {
@@ -48,7 +48,7 @@ export function Cvv({
           "data-error": true,
           "aria-invalid": true,
         })}
-        aria-label={localization.label.cvv}
+        aria-label={localization.label[locale].cvv}
         autoComplete="cc-csc"
         autoCorrect="off"
         className={classNames?.input}

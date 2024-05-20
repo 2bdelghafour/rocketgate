@@ -18,7 +18,7 @@ export function ExpiryMonth({
   placeholder,
   ...props
 }: ExpiryMonthProps): JSX.Element {
-  const { formData, setFormData, formErrors, localization } =
+  const { formData, setFormData, formErrors, localization, locale } =
     usePaymentFormContext();
   const expiryMonthErrors = formErrors?.fieldErrors.expiryMonth;
   const hasError = expiryMonthErrors && expiryMonthErrors.length > 0;
@@ -42,7 +42,7 @@ export function ExpiryMonth({
       {...(hasError && { "data-error": true })}
     >
       <label className={classNames?.label} htmlFor={EXPIRY_MONTH_FIELD}>
-        {localization.label.expiryMonth}
+        {localization.label[locale].expiryMonth}
       </label>
       <select
         {...(hasError && {
@@ -50,7 +50,7 @@ export function ExpiryMonth({
           "data-error": true,
           "aria-invalid": true,
         })}
-        aria-label={localization.label.expiryMonth}
+        aria-label={localization.label[locale].expiryMonth}
         autoComplete="cc-exp-month"
         className={classNames?.input}
         id={EXPIRY_MONTH_FIELD}
