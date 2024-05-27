@@ -1,5 +1,11 @@
 # rocketgate-fields
 
+## 0.6.2
+
+### Patch Changes
+
+- Correct Japanese language code
+
 ## 0.6.0
 
 ### Minor Changes

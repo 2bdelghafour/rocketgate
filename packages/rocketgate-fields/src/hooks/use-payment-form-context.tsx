@@ -22,7 +22,7 @@ export type Locale =
   | "DE"
   | "FR"
   | "PL"
-  | "JP";
+  | "JA";
 
 export interface PaymentFormContextProps {
   formData: FormData;
@@ -102,7 +102,7 @@ const baseLocalization: PaymentFormContextProps["localization"] = {
       expiryYear: "Rok ważności",
       cvv: "CVV",
     },
-    JP: {
+    JA: {
       cardNumber: "カード番号",
       expiryMonth: "有効期限月",
       expiryYear: "有効期限年",
@@ -174,7 +174,7 @@ const baseLocalization: PaymentFormContextProps["localization"] = {
       terms: "Należy zaakceptować warunki",
       expiry: "Termin ważności musi przypadać w przyszłości",
     },
-    JP: {
+    JA: {
       cardNumber: "カード番号の欠落または無効",
       expiryMonth: "有効期限の月が不明または無効",
       expiryYear: "有効期限がない、または無効",
