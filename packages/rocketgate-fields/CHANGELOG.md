@@ -1,5 +1,11 @@
 # rocketgate-fields
 
+## 0.7.0
+
+### Minor Changes
+
+- Update Luhn algorithm
+
 ## 0.6.2
 
 ### Patch Changes

@@ -8,20 +8,18 @@ export function padNumberWithZero(number: number, length: number): string {
 export const isValidCreditCardNumber = (creditCardNumber: string): boolean => {
   if (/[^0-9-\s]+/.test(creditCardNumber)) return false;
 
-  const creditCardNumberArray = creditCardNumber.replace(/\D/g, "").split("");
-  const creditCardNumberArrayLength = creditCardNumberArray.length;
+  const lookup = [0, 2, 4, 6, 8, 1, 3, 5, 7, 9];
+  let index = creditCardNumber.length;
+  let x2 = true;
+  let sum = 0;
 
-  if (creditCardNumberArrayLength < 13 || creditCardNumberArrayLength > 19)
-    return false;
+  while (index) {
+    const value = creditCardNumber.charCodeAt(--index) - 48;
+    if (value < 0 || value > 9) return false;
 
-  const sum = creditCardNumberArray
-    .map((digit, index) => {
-      let digitValue = parseInt(digit, 10);
-      if (index % 2 === 0 && (digitValue *= 2) > 9) return digitValue - 9;
-
-      return digitValue;
-    })
-    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    x2 = !x2;
+    sum += x2 ? lookup[value] : value;
+  }
 
   return sum % 10 === 0;
 };
