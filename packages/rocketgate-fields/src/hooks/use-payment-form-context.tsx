@@ -22,7 +22,8 @@ export type Locale =
   | "DE"
   | "FR"
   | "PL"
-  | "JA";
+  | "JA"
+  | "TR";
 
 export interface PaymentFormContextProps {
   formData: FormData;
@@ -108,6 +109,12 @@ const baseLocalization: PaymentFormContextProps["localization"] = {
       expiryYear: "有効期限年",
       cvv: "CVV",
     },
+    TR: {
+      cardNumber: "Kart Numarası",
+      expiryMonth: "Son Kullanım Tarihi - Ay",
+      expiryYear: "Son Kullanım Tarihi - Yıl",
+      cvv: "CVV",
+    },
   },
   error: {
     EN: {
@@ -181,6 +188,14 @@ const baseLocalization: PaymentFormContextProps["localization"] = {
       cvv: "CVVの欠落または無効",
       terms: "条件に同意する必要があります。",
       expiry: "有効期限が将来であること",
+    },
+    TR: {
+      cardNumber: "Eksik ya da geçersiz kart numarası",
+      expiryMonth: "Eksik ya da geçersiz son kullanım tarihi - Ay",
+      expiryYear: "Eksik ya da geçersiz son kullanım tarihi - Yıl",
+      cvv: "Eksik ya da geçersiz CVV numarası",
+      terms: "Kullanım Koşullarını kabul etmelisiniz",
+      expiry: "Son kullanım tarihi gelecekte bir tarihte olmalı",
     },
   },
 };

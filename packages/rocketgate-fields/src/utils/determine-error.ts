@@ -36,6 +36,7 @@ const paymentErrors: Partial<PaymentErrors> = {
     FR: "La carte est éligible pour participer à 3DS mais n'a pas été inscrite. Veuillez essayer avec une autre carte.",
     PL: "Karta kwalifikuje się do udziału w 3DS, ale nie została zarejestrowana. Spróbuj użyć innej karty.",
     JA: "このカードは3DSに登録可能ですが、まだ登録されていません。別のカードでお試しください。",
+    TR: "Kart 3DS'ye katılmaya uygun ancak kaydedilmemiş. Lütfen başka bir kartla deneyin.",
   },
   [REASON_CODES.REASON_3DSECURE_INELIGIBLE]: {
     EN: "The card is not eligible to participate in 3DS. Please try with another card.",
@@ -47,6 +48,7 @@ const paymentErrors: Partial<PaymentErrors> = {
     FR: "La carte n'est pas éligible pour participer à 3DS. Veuillez essayer avec une autre carte.",
     PL: "Karta nie kwalifikuje się do udziału w 3DS. Spróbuj użyć innej karty.",
     JA: "このカードは3DSに参加できません。別のカードでお試しください。",
+    TR: "Kart 3DS'ye katılmaya uygun değil. Lütfen başka bir kartla deneyin.",
   },
   [REASON_CODES.REASON_3DSECURE_REJECTED]: {
     EN: "Issuing bank has rejected the 3DS transaction. Please try with another card.",
@@ -58,6 +60,7 @@ const paymentErrors: Partial<PaymentErrors> = {
     FR: "La banque émettrice a rejeté la transaction 3DS. Veuillez essayer avec une autre carte.",
     PL: "Bank wydający kartę odrzucił transakcję 3DS. Spróbuj użyć innej karty.",
     JA: "発行銀行が3DSの取引を拒否しました。別のカードでお試しください。",
+    TR: "Kart bankanız 3DS işlemini reddetti. Lütfen başka bir kartla deneyin.",
   },
   [REASON_CODES.REASON_3DSECURE_FRICTIONLESS_FAILED_AUTH]: {
     EN: "3DS Authentication failed. Please try with another card.",
@@ -69,6 +72,7 @@ const paymentErrors: Partial<PaymentErrors> = {
     FR: "L'authentification 3DS a échoué. Veuillez essayer avec une autre carte.",
     PL: "Uwierzytelnianie 3DS nie powiodło się. Spróbuj użyć innej karty.",
     JA: "3DS認証に失敗しました。別のカードでお試しください。",
+    TR: "3DS doğrulaması başarısız oldu. Lütfen başka bir kartla deneyin.",
   },
   [REASON_CODES.REASON_3DSECURE_SCA_REQUIRED]: {
     EN: "3DS Authentication failed. Please try again.",
@@ -80,6 +84,7 @@ const paymentErrors: Partial<PaymentErrors> = {
     FR: "L'authentification 3DS a échoué. Veuillez réessayer.",
     PL: "Uwierzytelnianie 3DS nie powiodło się. Spróbuj ponownie.",
     JA: "3DS認証に失敗しました。もう一度やり直してください。",
+    TR: "3DS doğrulaması başarısız oldu. Lütfen tekrar deneyin.",
   },
   [REASON_CODES.REASON_BLOCKED_CARD_CATEGORY]: {
     EN: "Unfortunately we do not accept prepaid cards. Please try adding another card to continue.",
@@ -91,6 +96,7 @@ const paymentErrors: Partial<PaymentErrors> = {
     FR: "Malheureusement, nous n'acceptons pas les cartes prépayées. Veuillez essayer d'ajouter une autre carte pour continuer.",
     PL: "Niestety nie akceptujemy kart przedpłaconych. Spróbuj dodać inną kartę, aby kontynuować.",
     JA: "残念ながらプリペイドカードはご利用いただけません。他のカードを追加してください。",
+    TR: "Ne yazık ki ön ödemeli kartlar kabul edilmemektedir. Devam etmek için lütfen başka bir kart ile deneyin.",
   },
   default: {
     EN: "A payment error occurred, please try again.",
@@ -102,6 +108,7 @@ const paymentErrors: Partial<PaymentErrors> = {
     FR: "Une erreur de paiement s'est produite, veuillez réessayer.",
     PL: "Wystąpił błąd płatności, spróbuj ponownie.",
     JA: "支払いエラーが発生しました。",
+    TR: "Bir ödeme hatası oluştu, lütfen tekrar deneyin.",
   },
 };
 

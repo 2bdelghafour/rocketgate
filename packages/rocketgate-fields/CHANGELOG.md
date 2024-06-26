@@ -1,5 +1,11 @@
 # rocketgate-fields
 
+## 0.8.0
+
+### Minor Changes
+
+- Add Turkish locale & upgrade dependencies
+
 ## 0.7.0
 
 ### Minor Changes
