@@ -1,5 +1,11 @@
 # rocketgate-fields
 
+## 0.8.1
+
+### Patch Changes
+
+- Add missing locales
+
 ## 0.8.0
 
 ### Minor Changes
