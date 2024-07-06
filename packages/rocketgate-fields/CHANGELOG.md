@@ -1,5 +1,11 @@
 # rocketgate-fields
 
+## 0.8.2
+
+### Patch Changes
+
+- Block empty credit card numbers
+
 ## 0.8.1
 
 ### Patch Changes
